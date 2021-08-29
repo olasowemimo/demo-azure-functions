@@ -20,16 +20,18 @@ namespace demofuncs
         {
             log.LogInformation("Received a payment");
 
-
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             var order = JsonConvert.DeserializeObject<Order>(requestBody);
             await orderQueue.AddAsync(order);
-            
+
             log.LogInformation($"Order {order.OrderId} received from {order.Email} for Product{order.ProductId}");
 
             return new OkObjectResult($"Thank you for the purchase");
+
         }
     }
+
+
 
     public class Order
     {
